@@ -41,8 +41,8 @@ public class EmployeeCrudTest extends BaseTest {
         divisionBId = divs.size() >= 2 ? (String) divs.get(1).get("id") : divisionAId;
     }
 
-    @Test(description = "createEmployee dengan payload lengkap -> id")
-    public void createEmployee() {
+    private void ensureEmployeeCreated() {
+        if (employeeId != null) return;
         String stamp = String.valueOf(System.nanoTime());
         String mutation = "mutation createEmployee($input: EmployeeInput!) {"
                 + "  createEmployee(input: $input) { id __typename } }";
@@ -69,9 +69,14 @@ public class EmployeeCrudTest extends BaseTest {
         assertNotNull(employeeId, "createEmployee harus mengembalikan id");
     }
 
-    @Test(description = "employeeById -> detail employee yg baru dibuat",
-            dependsOnMethods = "createEmployee")
+    @Test(description = "createEmployee dengan payload lengkap -> id", priority = 1)
+    public void createEmployee() {
+        ensureEmployeeCreated();
+    }
+
+    @Test(description = "employeeById -> detail employee yg baru dibuat", priority = 2)
     public void employeeById() {
+        ensureEmployeeCreated();
         String q = "query EmployeeById($id: String!) {"
                 + "  employeeById(id: $id) { id name email status division { id name } } }";
         Response res = gql.post(q, Map.of("id", employeeId));
@@ -80,9 +85,9 @@ public class EmployeeCrudTest extends BaseTest {
         assertEquals(res.jsonPath().getString("data.employeeById.division.id"), divisionAId);
     }
 
-    @Test(description = "updateEmployee -> ubah name & phoneNumber",
-            dependsOnMethods = "createEmployee")
+    @Test(description = "updateEmployee -> ubah name & phoneNumber", priority = 3)
     public void updateEmployee() {
+        ensureEmployeeCreated();
         String mutation = "mutation updateEmployee($id: String!, $input: EmployeeInput!) {"
                 + "  updateEmployee(id: $id, input: $input) { id name phoneNumber } }";
         Map<String, Object> input = new LinkedHashMap<>();
@@ -99,9 +104,9 @@ public class EmployeeCrudTest extends BaseTest {
                 "updateEmployee harus untuk id yang sama");
     }
 
-    @Test(description = "updateEmployeesDivision (bulk) -> pindahkan ke divisi lain",
-            dependsOnMethods = "createEmployee")
+    @Test(description = "updateEmployeesDivision (bulk) -> pindahkan ke divisi lain", priority = 4)
     public void updateEmployeesDivisionBulk() {
+        ensureEmployeeCreated();
         // kalau hanya ada 1 division, skenario tetap valid: pindah ke divisi yg sama
         String mutation = "mutation MoveDivision($employeeIds: [String!]!, $divisionId: String!) {"
                 + "  updateEmployeesDivision(employeeIds: $employeeIds, divisionId: $divisionId) }";
