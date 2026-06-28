@@ -1,1 +1,8 @@
+plugins {
+    // Auto-resolve JDK toolchain (lihat java.toolchain di build.gradle) saat tidak
+    // ada JDK matching terinstal lokal. Mencegah error "No locally installed
+    // toolchains match" pada IntelliJ Gradle sync / mesin baru.
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
 rootProject.name = 'lms-b2b-graphql-tests'

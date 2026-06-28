@@ -24,6 +24,12 @@ Thumbs.db
 *.log
 *.tmp
 
+# Build output (Eclipse / misc)
+bin/
+
+# Materi / slide
+*.pptx
+
 # Secrets / kredensial — JANGAN commit .env asli
 .env
 !.env.example
