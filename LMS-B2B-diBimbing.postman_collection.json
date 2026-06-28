@@ -8,34 +8,134 @@
   "auth": {
     "type": "basic",
     "basic": [
-      { "key": "username", "value": "{{basicUser}}", "type": "string" },
-      { "key": "password", "value": "{{basicPass}}", "type": "string" }
+      {
+        "key": "username",
+        "value": "{{basicUser}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicPass}}",
+        "type": "string"
+      }
     ]
   },
   "variable": [
-    { "key": "baseURL", "value": "https://lmsb2b.do.dibimbing.id/graphql", "type": "string" },
-    { "key": "basicUser", "value": "b2bserveruser", "type": "string" },
-    { "key": "basicPass", "value": "ENAcA3Sog22681sAKvih8KkpDKvF2aQ6", "type": "string" },
-    { "key": "companyId", "value": "811637b1-9989-4d45-a9f5-220c5f2354f7", "type": "string" },
-    { "key": "companySlug", "value": "dibimbingqa", "type": "string" },
-    { "key": "usernameOrEmail", "value": "arwendymelyn@dibimbing.id", "type": "string" },
-    { "key": "password", "value": "s2et9bh6l", "type": "string" },
-    { "key": "superAdminUser", "value": "", "type": "string" },
-    { "key": "superAdminPass", "value": "", "type": "string" },
-    { "key": "employeeId", "value": "", "type": "string" },
-    { "key": "divisionId", "value": "", "type": "string" },
-    { "key": "programId", "value": "", "type": "string" },
-    { "key": "chapterId", "value": "", "type": "string" },
-    { "key": "contentId", "value": "", "type": "string" },
-    { "key": "userProgramId", "value": "", "type": "string" },
-    { "key": "videoCourseId", "value": "", "type": "string" },
-    { "key": "bootcampId", "value": "", "type": "string" },
-    { "key": "bootcampContentId", "value": "", "type": "string" },
-    { "key": "quizId", "value": "", "type": "string" },
-    { "key": "submissionId", "value": "", "type": "string" },
-    { "key": "mediaId", "value": "", "type": "string" },
-    { "key": "announcementId", "value": "", "type": "string" },
-    { "key": "forumId", "value": "", "type": "string" }
+    {
+      "key": "baseURL",
+      "value": "https://lmsb2b.do.dibimbing.id/graphql",
+      "type": "string"
+    },
+    {
+      "key": "basicUser",
+      "value": "b2bserveruser",
+      "type": "string"
+    },
+    {
+      "key": "basicPass",
+      "value": "ENAcA3Sog22681sAKvih8KkpDKvF2aQ6",
+      "type": "string"
+    },
+    {
+      "key": "companyId",
+      "value": "811637b1-9989-4d45-a9f5-220c5f2354f7",
+      "type": "string"
+    },
+    {
+      "key": "companySlug",
+      "value": "dibimbingqa",
+      "type": "string"
+    },
+    {
+      "key": "usernameOrEmail",
+      "value": "arwendymelyn@dibimbing.id",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "s2et9bh6l",
+      "type": "string"
+    },
+    {
+      "key": "superAdminUser",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "superAdminPass",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "employeeId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "divisionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "programId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "chapterId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "contentId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userProgramId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "videoCourseId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "bootcampId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "bootcampContentId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "quizId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "submissionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "mediaId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "announcementId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "forumId",
+      "value": "",
+      "type": "string"
+    }
   ],
   "item": [
     {
@@ -46,10 +146,18 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
-              "graphql": { "query": "query Ping { ping }", "variables": "{}" }
+              "graphql": {
+                "query": "query Ping { ping }",
+                "variables": "{}"
+              }
             }
           }
         }
@@ -77,7 +185,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -92,7 +205,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -107,7 +225,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -122,8 +245,19 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
-            "body": { "mode": "graphql", "graphql": { "query": "mutation Logout { logout }", "variables": "{}" } }
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Logout { logout }",
+                "variables": "{}"
+              }
+            }
           }
         },
         {
@@ -131,7 +265,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -146,7 +285,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -166,7 +310,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -181,7 +330,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -196,7 +350,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -211,7 +370,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -226,7 +390,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -246,7 +415,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -261,7 +435,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -288,12 +467,17 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "mutation CreateEmployee($input: EmployeeInput!) {\n  createEmployee(input: $input) { id name email username status }\n}",
-                "variables": "{\n  \"input\": {\n    \"name\": \"Siti Aminah\",\n    \"employeeId\": \"EMP-001\",\n    \"email\": \"siti@majujaya.com\",\n    \"username\": \"sitiaminah\",\n    \"phoneNumber\": \"08111111111\",\n    \"gender\": \"FEMALE\",\n    \"divisionId\": \"{{divisionId}}\",\n    \"employeeRole\": \"EMPLOYEE\",\n    \"angkatanId\": 1\n  }\n}"
+                "query": "mutation createEmployee($input: EmployeeInput!) {\n  createEmployee(input: $input) {\n    id\n    __typename\n  }\n}",
+                "variables": "{\n  \"input\": {\n    \"name\": \"Arief Rahman Hakim - diBimbing\",\n    \"employeeId\": \"ID-Arief-123\",\n    \"email\": \"arief@test.com\",\n    \"address\": \"test\",\n    \"angkatanId\": 1,\n    \"dateOfBirth\": \"2019-01-28T00:00:00.000Z\",\n    \"divisionId\": \"{{divisionId}}\",\n    \"employeeRole\": \"admin\",\n    \"gender\": \"male\",\n    \"nik\": \"31232132131\",\n    \"npwp\": \"2313313\",\n    \"phoneNumber\": \"8273817331\"\n  }\n}"
               }
             }
           }
@@ -303,12 +487,17 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "mutation UpdateEmployee($id: String!, $input: EmployeeInput!) {\n  updateEmployee(id: $id, input: $input) { id name email }\n}",
-                "variables": "{\n  \"id\": \"{{employeeId}}\",\n  \"input\": { \"name\": \"Siti Aminah Update\", \"phoneNumber\": \"08222222222\" }\n}"
+                "query": "mutation updateEmployee($id: String!, $input: EmployeeInput!) {\n  updateEmployee(id: $id, input: $input) {\n    id name email phoneNumber\n  }\n}",
+                "variables": "{\n  \"id\": \"{{employeeId}}\",\n  \"input\": {\n    \"name\": \"Arief Rahman Hakim - diBimbing (updated)\",\n    \"phoneNumber\": \"8273817332\"\n  }\n}"
               }
             }
           }
@@ -318,7 +507,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -333,7 +527,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -360,7 +559,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -380,7 +584,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -407,7 +616,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -434,7 +648,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -461,7 +680,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -476,7 +700,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -491,7 +720,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -506,7 +740,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -539,7 +778,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -554,7 +798,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -569,7 +818,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -584,7 +838,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -599,7 +858,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -619,7 +883,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -634,7 +903,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -649,7 +923,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -664,7 +943,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -684,7 +968,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -699,7 +988,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -726,7 +1020,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -753,7 +1052,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -780,7 +1084,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -795,7 +1104,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -822,7 +1136,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -837,7 +1156,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -852,7 +1176,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -867,7 +1196,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -882,7 +1216,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -897,7 +1236,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -917,7 +1261,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -932,7 +1281,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -947,7 +1301,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -962,7 +1321,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -982,7 +1346,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -997,7 +1366,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1012,7 +1386,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1032,10 +1411,18 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
-              "graphql": { "query": "query Storage { availableStorage { usedStorage maxStorage } }", "variables": "{}" }
+              "graphql": {
+                "query": "query Storage { availableStorage { usedStorage maxStorage } }",
+                "variables": "{}"
+              }
             }
           }
         },
@@ -1044,7 +1431,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1071,7 +1463,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1091,7 +1488,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1106,7 +1508,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1121,7 +1528,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1136,7 +1548,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1151,7 +1568,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1166,7 +1588,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1181,7 +1608,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1196,7 +1628,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1216,7 +1653,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1231,7 +1673,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {
@@ -1246,7 +1693,12 @@
           "request": {
             "method": "POST",
             "header": [],
-            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "url": {
+              "raw": "{{baseURL}}",
+              "host": [
+                "{{baseURL}}"
+              ]
+            },
             "body": {
               "mode": "graphql",
               "graphql": {

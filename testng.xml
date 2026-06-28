@@ -5,6 +5,7 @@
         <classes>
             <class name="id.dibimbing.lms.tests.AuthTest"/>
             <class name="id.dibimbing.lms.tests.CompanyAdminTest"/>
+            <class name="id.dibimbing.lms.tests.EmployeeCrudTest"/>
             <class name="id.dibimbing.lms.tests.ProgramTest"/>
             <class name="id.dibimbing.lms.tests.LearnerTest"/>
             <class name="id.dibimbing.lms.tests.VideoCourseAnnouncementMediaTest"/>
