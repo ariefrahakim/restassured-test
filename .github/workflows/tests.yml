@@ -1,0 +1,47 @@
+name: RestAssured Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run TestNG suite (Gradle)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run tests
+        env:
+          # Kredensial diambil dari GitHub Secrets (Settings > Secrets and variables > Actions).
+          # Config.java membaca env var ini bila .env tidak ada.
+          BASE_URL: ${{ secrets.BASE_URL }}
+          USERNAME: ${{ secrets.BASIC_USERNAME }}
+          PASSWORD: ${{ secrets.BASIC_PASSWORD }}
+          ADMIN: ${{ secrets.ADMIN }}
+          PASSWORD_ADMIN: ${{ secrets.PASSWORD_ADMIN }}
+          COMPANY_ID: ${{ secrets.COMPANY_ID }}
+          COMPANY_SLUG: ${{ secrets.COMPANY_SLUG }}
+        run: ./gradlew test --no-daemon
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: build/reports/tests/test
+          if-no-files-found: ignore

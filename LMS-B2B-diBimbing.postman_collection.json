@@ -1,0 +1,1262 @@
+{
+  "info": {
+    "name": "LMS B2B diBimbing - GraphQL",
+    "_postman_id": "b2b-lms-dibimbing-graphql-0001",
+    "description": "Koleksi GraphQL LMS B2B diBimbing.\n\nEndpoint: {{baseURL}}\nAuth lapis 1: HTTP Basic ({{basicUser}}/{{basicPass}}) di level koleksi.\nAuth lapis 2: jalankan 'Auth > Login' atau 'Login Super Admin' -> session cookie otomatis tersimpan oleh Postman cookie jar.\n\nIsi variabel di tab 'Variables' atau Environment sebelum dipakai.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{basicUser}}", "type": "string" },
+      { "key": "password", "value": "{{basicPass}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseURL", "value": "https://lmsb2b.do.dibimbing.id/graphql", "type": "string" },
+    { "key": "basicUser", "value": "b2bserveruser", "type": "string" },
+    { "key": "basicPass", "value": "ENAcA3Sog22681sAKvih8KkpDKvF2aQ6", "type": "string" },
+    { "key": "companyId", "value": "811637b1-9989-4d45-a9f5-220c5f2354f7", "type": "string" },
+    { "key": "companySlug", "value": "dibimbingqa", "type": "string" },
+    { "key": "usernameOrEmail", "value": "arwendymelyn@dibimbing.id", "type": "string" },
+    { "key": "password", "value": "s2et9bh6l", "type": "string" },
+    { "key": "superAdminUser", "value": "", "type": "string" },
+    { "key": "superAdminPass", "value": "", "type": "string" },
+    { "key": "employeeId", "value": "", "type": "string" },
+    { "key": "divisionId", "value": "", "type": "string" },
+    { "key": "programId", "value": "", "type": "string" },
+    { "key": "chapterId", "value": "", "type": "string" },
+    { "key": "contentId", "value": "", "type": "string" },
+    { "key": "userProgramId", "value": "", "type": "string" },
+    { "key": "videoCourseId", "value": "", "type": "string" },
+    { "key": "bootcampId", "value": "", "type": "string" },
+    { "key": "bootcampContentId", "value": "", "type": "string" },
+    { "key": "quizId", "value": "", "type": "string" },
+    { "key": "submissionId", "value": "", "type": "string" },
+    { "key": "mediaId", "value": "", "type": "string" },
+    { "key": "announcementId", "value": "", "type": "string" },
+    { "key": "forumId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "0. Health",
+      "item": [
+        {
+          "name": "ping",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": { "query": "query Ping { ping }", "variables": "{}" }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Auth",
+      "item": [
+        {
+          "name": "login (user perusahaan)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "const u = r.data && r.data.login && r.data.login.user;",
+                  "if (u) { pm.collectionVariables.set('companyId', u.companyId || pm.collectionVariables.get('companyId')); console.log('Logged in as', u.email); }",
+                  "pm.test('no auth errors', () => pm.expect(r.errors, JSON.stringify(r.errors)).to.be.undefined);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Login($companyId: String!, $usernameOrEmail: String!, $password: String!) {\n  login(companyId: $companyId, usernameOrEmail: $usernameOrEmail, password: $password) {\n    errors { field message }\n    user { id name email role status companyId company { id name slug } }\n  }\n}",
+                "variables": "{\n  \"companyId\": \"{{companyId}}\",\n  \"usernameOrEmail\": \"{{usernameOrEmail}}\",\n  \"password\": \"{{password}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "loginSuperAdmin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation LoginSuperAdmin($usernameOrEmail: String!, $password: String!) {\n  loginSuperAdmin(usernameOrEmail: $usernameOrEmail, password: $password) {\n    errors { field message }\n    user { id email username role status companyId }\n  }\n}",
+                "variables": "{\n  \"usernameOrEmail\": \"{{superAdminUser}}\",\n  \"password\": \"{{superAdminPass}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "me",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Me {\n  me {\n    id name email username role status\n    companyId company { id name slug }\n    countAssignedProgram countAssignedBootcamp isMentor\n  }\n}",
+                "variables": "{}"
+              }
+            }
+          }
+        },
+        {
+          "name": "logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": { "mode": "graphql", "graphql": { "query": "mutation Logout { logout }", "variables": "{}" } }
+          }
+        },
+        {
+          "name": "forgotPassword",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation ForgotPassword($email: String!, $slug: String, $captcha: String) {\n  forgotPassword(email: $email, slug: $slug, captcha: $captcha)\n}",
+                "variables": "{\n  \"email\": \"user@perusahaan.com\",\n  \"slug\": \"company-slug\",\n  \"captcha\": null\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "updateMyPassword",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateMyPassword($input: UpdateMyPasswordInput!) {\n  updateMyPassword(input: $input) { id email }\n}",
+                "variables": "{\n  \"input\": {\n    \"currentPassword\": \"old123\",\n    \"password\": \"new123\",\n    \"confirmPassword\": \"new123\"\n  }\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Super Admin - Companies",
+      "item": [
+        {
+          "name": "companies (list)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Companies($page: Float, $limit: Float, $search: String, $status: [String!]) {\n  companies(page: $page, limit: $limit, search: $search, status: $status, orderColumn: \"createdAt\", orderBy: \"DESC\") {\n    id name slug email status maxActiveEmployee maxStorage\n    countEmployee countActiveEmployee countVideoCourse countClass\n  }\n  countCompanies(search: $search, status: $status)\n}",
+                "variables": "{\n  \"page\": 1,\n  \"limit\": 10,\n  \"search\": \"\",\n  \"status\": [\"ACTIVE\"]\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createCompany (+ PIC)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateCompany($input: CreateCompanyParam!) {\n  createCompany(input: $input) { id name slug status }\n}",
+                "variables": "{\n  \"input\": {\n    \"company\": {\n      \"name\": \"PT Maju Jaya\",\n      \"email\": \"hr@majujaya.com\",\n      \"phoneNumber\": \"0218888888\",\n      \"address\": \"Jakarta\",\n      \"slug\": \"maju-jaya\",\n      \"prefix\": \"MJ\",\n      \"maxActiveEmployee\": 100,\n      \"maxStorage\": 5000,\n      \"mediaTypeOptions\": [\"video\", \"document\"]\n    },\n    \"pic\": {\n      \"name\": \"Admin HR\",\n      \"email\": \"admin@majujaya.com\",\n      \"username\": \"adminmajujaya\",\n      \"employeeRole\": \"ADMIN\",\n      \"phoneNumber\": \"08123456789\"\n    }\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "updateCompany",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateCompany($id: String!, $input: CreateCompanyParam!) {\n  updateCompany(id: $id, input: $input) { id name slug status }\n}",
+                "variables": "{\n  \"id\": \"{{companyId}}\",\n  \"input\": {\n    \"company\": { \"name\": \"PT Maju Jaya Sejahtera\" },\n    \"pic\": { \"name\": \"Admin HR\" }\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "activateCompany / inactivateCompany",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation ToggleCompany($id: String!) {\n  activateCompany(id: $id)\n  # inactivateCompany(id: $id)\n}",
+                "variables": "{\n  \"id\": \"{{companyId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "updateCompanyVideoCoursePermission",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateVCPerm($id: String!, $input: CompanyVideoCoursePermissionInput!) {\n  updateCompanyVideoCoursePermission(id: $id, input: $input) { id maxVideoCourse videoCourseExpiredDate }\n}",
+                "variables": "{\n  \"id\": \"{{companyId}}\",\n  \"input\": { \"maxVideoCourse\": 50, \"videoCourseExpiredDate\": \"2026-12-31T00:00:00.000Z\" }\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Admin - Employees & Divisions",
+      "item": [
+        {
+          "name": "employees (list)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Employees($page: Float, $limit: Float, $search: String, $status: [String!], $divisionIds: [String!]) {\n  employees(page: $page, limit: $limit, search: $search, status: $status, divisionIds: $divisionIds, orderColumn: \"name\", orderBy: \"ASC\") {\n    id name email employeeId status divisionId\n    division { id name } angkatan { id name }\n    countAssignedProgram countFinishedProgram averageTotalScore\n  }\n  countEmployees(search: $search, status: $status, divisionIds: $divisionIds)\n}",
+                "variables": "{\n  \"page\": 1,\n  \"limit\": 10,\n  \"search\": \"\",\n  \"status\": [\"ACTIVE\"],\n  \"divisionIds\": []\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "employeeById",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query EmployeeById($id: String!) {\n  employeeById(id: $id) { id name email status division { id name } }\n}",
+                "variables": "{\n  \"id\": \"{{employeeId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createEmployee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createEmployee) pm.collectionVariables.set('employeeId', r.data.createEmployee.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateEmployee($input: EmployeeInput!) {\n  createEmployee(input: $input) { id name email username status }\n}",
+                "variables": "{\n  \"input\": {\n    \"name\": \"Siti Aminah\",\n    \"employeeId\": \"EMP-001\",\n    \"email\": \"siti@majujaya.com\",\n    \"username\": \"sitiaminah\",\n    \"phoneNumber\": \"08111111111\",\n    \"gender\": \"FEMALE\",\n    \"divisionId\": \"{{divisionId}}\",\n    \"employeeRole\": \"EMPLOYEE\",\n    \"angkatanId\": 1\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "updateEmployee",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateEmployee($id: String!, $input: EmployeeInput!) {\n  updateEmployee(id: $id, input: $input) { id name email }\n}",
+                "variables": "{\n  \"id\": \"{{employeeId}}\",\n  \"input\": { \"name\": \"Siti Aminah Update\", \"phoneNumber\": \"08222222222\" }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "updateEmployeesDivision (bulk)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation MoveDivision($employeeIds: [String!]!, $divisionId: String!) {\n  updateEmployeesDivision(employeeIds: $employeeIds, divisionId: $divisionId)\n}",
+                "variables": "{\n  \"employeeIds\": [\"{{employeeId}}\"],\n  \"divisionId\": \"{{divisionId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "divisions (list)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Divisions($page: Float, $limit: Float, $search: String) {\n  divisions(page: $page, limit: $limit, search: $search, orderColumn: \"name\", orderBy: \"ASC\") {\n    id name description countEmployees\n  }\n  countDivisions(search: $search)\n}",
+                "variables": "{\n  \"page\": 1,\n  \"limit\": 20,\n  \"search\": \"\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createDivision",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createDivision) pm.collectionVariables.set('divisionId', r.data.createDivision.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateDivision($input: DivisionInput!) {\n  createDivision(input: $input) { id name description }\n}",
+                "variables": "{\n  \"input\": { \"name\": \"Engineering\", \"description\": \"Divisi teknik\" }\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Program / Onboarding",
+      "item": [
+        {
+          "name": "programs (list)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Programs($page: Float, $limit: Float, $search: String, $type: String) {\n  programs(page: $page, limit: $limit, search: $search, type: $type, orderColumn: \"createdAt\", orderBy: \"DESC\") {\n    id title type isSequential countChapters countContents countAssignedEmployee\n  }\n  countPrograms(search: $search, type: $type)\n}",
+                "variables": "{\n  \"page\": 1,\n  \"limit\": 10,\n  \"search\": \"\",\n  \"type\": \"ONBOARDING\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createProgram",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createProgram) pm.collectionVariables.set('programId', r.data.createProgram.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateProgram($input: ProgramInput!) {\n  createProgram(input: $input) { id title type isSequential }\n}",
+                "variables": "{\n  \"input\": {\n    \"title\": \"Onboarding Karyawan Baru\",\n    \"description\": \"Materi wajib\",\n    \"type\": \"ONBOARDING\",\n    \"isSequential\": true\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createChapter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createChapter) pm.collectionVariables.set('chapterId', r.data.createChapter.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateChapter($input: ChapterInput!) {\n  createChapter(input: $input) { id title order }\n}",
+                "variables": "{\n  \"input\": {\n    \"title\": \"Bab 1 - Pengenalan\",\n    \"description\": \"...\",\n    \"order\": 1,\n    \"programId\": \"{{programId}}\"\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createContent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createContent) pm.collectionVariables.set('contentId', r.data.createContent.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateContent($input: ContentInput!) {\n  createContent(input: $input) { id title type order }\n}",
+                "variables": "{\n  \"input\": {\n    \"title\": \"Video Sambutan CEO\",\n    \"description\": \"...\",\n    \"order\": 1,\n    \"chapterId\": \"{{chapterId}}\",\n    \"type\": \"VIDEO\",\n    \"mediaType\": \"video\",\n    \"videoUrl\": \"https://example.com/video.mp4\",\n    \"duration\": 600\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createQuestion",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateQuestion($input: QuestionInput!) {\n  createQuestion(input: $input) { id question options answers }\n}",
+                "variables": "{\n  \"input\": {\n    \"contentId\": \"{{contentId}}\",\n    \"order\": 1,\n    \"type\": \"MULTIPLE_CHOICE\",\n    \"question\": \"Apa visi perusahaan?\",\n    \"options\": [\"A. ...\", \"B. ...\", \"C. ...\", \"D. ...\"],\n    \"answers\": [0]\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "assignProgram",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation AssignProgram($input: AssignProgramInput!) {\n  assignProgram(input: $input)\n}",
+                "variables": "{\n  \"input\": {\n    \"programId\": \"{{programId}}\",\n    \"employeeIds\": [\"{{employeeId}}\"],\n    \"startDate\": \"2026-07-01T00:00:00.000Z\",\n    \"endDate\": \"2026-07-31T23:59:59.000Z\"\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "chaptersByProgramId",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Chapters($programId: String!) {\n  chaptersByProgramId(programId: $programId) {\n    id title order countContents contents { id title type order }\n  }\n}",
+                "variables": "{\n  \"programId\": \"{{programId}}\"\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Learner",
+      "item": [
+        {
+          "name": "myUserProgram",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "const list = r.data && r.data.myUserProgram;",
+                  "if (list && list.length) pm.collectionVariables.set('userProgramId', list[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query MyUserProgram($status: [String!]!, $type: [String!]!, $page: Float, $limit: Float, $search: String) {\n  myUserProgram(status: $status, type: $type, page: $page, limit: $limit, search: $search) {\n    id status startDate endDate isFinished countPercentageProgress avgScore\n    program { id title type countChapters countContents }\n  }\n  countMyUserProgram(status: $status, type: $type)\n}",
+                "variables": "{\n  \"status\": [\"ASSIGNED\", \"ON_PROGRESS\"],\n  \"type\": [\"ONBOARDING\"],\n  \"page\": 1,\n  \"limit\": 10,\n  \"search\": \"\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "userProgressChaptersByUserProgramId",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Progress($userProgramId: String!) {\n  userProgressChaptersByUserProgramId(userProgramId: $userProgramId) {\n    id title order countContents countFinishedContent\n    contents { id title type order isComplete }\n  }\n}",
+                "variables": "{\n  \"userProgramId\": \"{{userProgramId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "contentById",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Content($id: String!) {\n  contentById(id: $id) {\n    id title type article videoUrl duration isComplete\n    questions { id question options }\n  }\n}",
+                "variables": "{\n  \"id\": \"{{contentId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "submitContentLog",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SubmitContentLog($contentId: String!) {\n  submitContentLog(contentId: $contentId) { id }\n}",
+                "variables": "{\n  \"contentId\": \"{{contentId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "submitTestLog",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SubmitTestLog($contentId: String!, $answers: [ContentLogAnswerInput!]!) {\n  submitTestLog(contentId: $contentId, answers: $answers) { id }\n}",
+                "variables": "{\n  \"contentId\": \"{{contentId}}\",\n  \"answers\": [\n    { \"questionId\": \"<uuid-q1>\", \"answers\": [0] },\n    { \"questionId\": \"<uuid-q2>\", \"essayAnswer\": \"Jawaban esai\" }\n  ]\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Video Course",
+      "item": [
+        {
+          "name": "videoCourses (catalog)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query VideoCourses($page: Float, $limit: Float, $search: String, $categoryId: [Float!]) {\n  videoCourses(page: $page, limit: $limit, search: $search, categoryId: $categoryId) {\n    id title briefDescription access avgRating category { id name }\n  }\n  countVideoCourses(search: $search, categoryId: $categoryId)\n}",
+                "variables": "{\n  \"page\": 1,\n  \"limit\": 10,\n  \"search\": \"\",\n  \"categoryId\": []\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "myVideoCourses",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query MyVideoCourses($param: InputBaseQuery) {\n  myVideoCourses(param: $param) { id title access avgRating }\n}",
+                "variables": "{\n  \"param\": { \"page\": 1, \"limit\": 10, \"search\": \"\" }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "assignUserProgramByVideoCourseId",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation AssignVC($videoCourseId: Float!, $userIds: [String!]!, $endDate: DateTime) {\n  assignUserProgramByVideoCourseId(videoCourseId: $videoCourseId, userIds: $userIds, endDate: $endDate) { id status }\n}",
+                "variables": "{\n  \"videoCourseId\": 1,\n  \"userIds\": [\"{{employeeId}}\"],\n  \"endDate\": \"2026-12-31T23:59:59.000Z\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "rateVideoCourse",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation RateVC($videoCourseId: Float!, $rating: Float!, $feedback: String!) {\n  rateVideoCourse(videoCourseId: $videoCourseId, rating: $rating, feedback: $feedback)\n}",
+                "variables": "{\n  \"videoCourseId\": 1,\n  \"rating\": 5,\n  \"feedback\": \"Materi bagus\"\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Bootcamp",
+      "item": [
+        {
+          "name": "bootcamps (list)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Bootcamps($param: InputBaseQuery!) {\n  bootcamps(param: $param) { id title startedAt finishedAt countAssignedUser }\n  countBootcamps(param: $param)\n}",
+                "variables": "{\n  \"param\": { \"page\": 1, \"limit\": 10, \"search\": \"\" }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "myBootcamps",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query MyBootcamps($param: BootcampBaseQuery!) {\n  myBootcamps(param: $param) { id title startedAt finishedAt }\n  countMyBootcamps(param: $param)\n}",
+                "variables": "{\n  \"param\": { \"page\": 1, \"limit\": 10, \"search\": \"\", \"status\": [] }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createBootcamp",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createBootcamp) pm.collectionVariables.set('bootcampId', r.data.createBootcamp.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateBootcamp($input: InputBootcamp!) {\n  createBootcamp(input: $input) { id title startedAt finishedAt }\n}",
+                "variables": "{\n  \"input\": {\n    \"title\": \"Data Analytics Batch 5\",\n    \"descriptions\": \"Bootcamp 3 bulan\",\n    \"angkatanId\": 5,\n    \"divisionId\": \"{{divisionId}}\",\n    \"enrollmentKey\": \"DA-2026\",\n    \"startedAt\": \"2026-07-01\",\n    \"finishedAt\": \"2026-09-30\",\n    \"attendancePercentage\": 20,\n    \"attendancePercentageToggle\": true,\n    \"finalProjectPercentage\": 50,\n    \"finalProjectPercentageToggle\": true,\n    \"isAllFinproRequired\": true\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createBootcampContent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createBootcampContent) pm.collectionVariables.set('bootcampContentId', r.data.createBootcampContent.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateBootcampContent($input: InputBootcampContent!) {\n  createBootcampContent(input: $input) { id title liveClassTime }\n}",
+                "variables": "{\n  \"input\": {\n    \"bootcampId\": \"{{bootcampId}}\",\n    \"title\": \"Sesi 1 - Intro to SQL\",\n    \"descriptions\": \"...\",\n    \"liveClassTime\": \"2026-07-02T09:00:00.000Z\",\n    \"liveClassDuration\": 120,\n    \"zoomUrl\": \"https://zoom.us/j/123\",\n    \"isAttendanceCounted\": true,\n    \"enableCheckIn\": true,\n    \"checkInKey\": \"MASUK01\",\n    \"enableCheckOut\": true,\n    \"checkOutKey\": \"PULANG01\"\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createBootcampQuiz",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createBootcampQuiz) pm.collectionVariables.set('quizId', r.data.createBootcampQuiz.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateBootcampQuiz($input: InputBootcampQuiz!) {\n  createBootcampQuiz(input: $input) { id title type deadline }\n}",
+                "variables": "{\n  \"input\": {\n    \"title\": \"Post Test Sesi 1\",\n    \"type\": \"POST_TEST\",\n    \"bootcampId\": \"{{bootcampId}}\",\n    \"contentId\": \"{{bootcampContentId}}\",\n    \"startDate\": \"2026-07-02T11:00:00.000Z\",\n    \"deadline\": \"2026-07-03T23:59:59.000Z\",\n    \"timer\": 60,\n    \"needGradingConfirmation\": false\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createBootcampQuestion",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateBootcampQuestion($input: InputBootcampQuestion!) {\n  createBootcampQuestion(input: $input) { id question }\n}",
+                "variables": "{\n  \"input\": {\n    \"quizId\": \"{{quizId}}\",\n    \"order\": 1,\n    \"type\": \"MULTIPLE_CHOICE\",\n    \"question\": \"SELECT * FROM table?\",\n    \"questionScore\": 10,\n    \"answer\": { \"option\": [\"A\", \"B\", \"C\", \"D\"], \"answer\": [2] }\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createBootcampSubmission",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createBootcampSubmission) pm.collectionVariables.set('submissionId', r.data.createBootcampSubmission.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateBootcampSubmission($input: InputBootcampSubmission!) {\n  createBootcampSubmission(input: $input) { id title deadline }\n}",
+                "variables": "{\n  \"input\": {\n    \"bootcampId\": \"{{bootcampId}}\",\n    \"title\": \"Mini Project 1\",\n    \"description\": \"...\",\n    \"type\": \"MINI_PROJECT\",\n    \"submissionType\": \"LINK\",\n    \"deadline\": \"2026-07-15T23:59:59.000Z\",\n    \"isGroupSubmission\": false,\n    \"isNoPenalty\": false,\n    \"gradingCriteria\": [\n      { \"assessmentAspect\": \"Kelengkapan\", \"gradingDetail\": [ { \"assessmentDetail\": \"Lengkap\", \"maxScore\": 100 } ] }\n    ]\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "assignUserBootcamp",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation AssignUserBootcamp($bootcampId: String!, $userIds: [String!]!) {\n  assignUserBootcamp(bootcampId: $bootcampId, userIds: $userIds)\n}",
+                "variables": "{\n  \"bootcampId\": \"{{bootcampId}}\",\n  \"userIds\": [\"{{employeeId}}\"]\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createBootcampContentLog (absen)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Absen($input: BootcampContentLogInput!) {\n  createBootcampContentLog(input: $input) { id action }\n}",
+                "variables": "{\n  \"input\": {\n    \"contentId\": \"{{bootcampContentId}}\",\n    \"key\": \"MASUK01\",\n    \"action\": \"CHECK_IN\"\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "submitNewQuizLog",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SubmitQuiz($input: BootcampQuizLogInput!) {\n  submitNewQuizLog(input: $input) { id status score }\n}",
+                "variables": "{\n  \"input\": {\n    \"quizId\": \"{{quizId}}\",\n    \"status\": \"SUBMITTED\",\n    \"timeleft\": 0,\n    \"answers\": [ { \"questionId\": \"<uuid-q>\", \"answer\": [2] } ],\n    \"essayAnswer\": [ { \"questionId\": \"<uuid-eq>\", \"essay\": \"Jawaban\" } ]\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "submitBootcampSubmission",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SubmitProject($input: CreateBootcampSubmissionLog!) {\n  submitBootcampSubmission(input: $input) { id }\n}",
+                "variables": "{\n  \"input\": {\n    \"submissionId\": \"{{submissionId}}\",\n    \"submissionUrl\": \"https://github.com/user/project\",\n    \"userGroupIds\": [\"{{employeeId}}\"]\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "generateFinalScore",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation FinalScore($bootcampBatchId: String!) {\n  generateFinalScore(bootcampBatchId: $bootcampBatchId) { userId finalScore }\n}",
+                "variables": "{\n  \"bootcampBatchId\": \"{{bootcampId}}\"\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Announcement",
+      "item": [
+        {
+          "name": "announcements (list)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Announcements($page: Float, $limit: Float, $search: String) {\n  announcements(page: $page, limit: $limit, search: $search, orderColumn: \"createdAt\", orderBy: \"DESC\") {\n    id title content isForAllEmployee createdAt\n  }\n  countAnnouncement(search: $search)\n}",
+                "variables": "{\n  \"page\": 1,\n  \"limit\": 10,\n  \"search\": \"\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createAnnouncement",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateAnnouncement($input: AnnouncementInput!) {\n  createAnnouncement(input: $input) { id title }\n}",
+                "variables": "{\n  \"input\": {\n    \"title\": \"Libur Nasional\",\n    \"content\": \"<p>Kantor tutup...</p>\",\n    \"isForAllEmployee\": false,\n    \"division\": [ { \"id\": \"{{divisionId}}\", \"title\": \"Engineering\" } ],\n    \"program\": [ { \"id\": \"{{programId}}\", \"title\": \"Onboarding\" } ]\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "myUserAnnouncement",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query MyAnnouncements($lastId: String, $limit: Float) {\n  myUserAnnouncement(lastId: $lastId, limit: $limit) {\n    id isRead announcement { id title content createdAt }\n  }\n}",
+                "variables": "{\n  \"lastId\": null,\n  \"limit\": 10\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "setIsReadAnnouncement",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation MarkRead($announcementIds: [String!]!) {\n  setIsReadAnnouncement(announcementIds: $announcementIds)\n}",
+                "variables": "{\n  \"announcementIds\": [\"{{announcementId}}\"]\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Forum",
+      "item": [
+        {
+          "name": "forums (list)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Forums($query: ForumBaseQuery!) {\n  forums(query: $query) { id title text type }\n  countForums(query: $query)\n}",
+                "variables": "{\n  \"query\": { \"page\": 1, \"limit\": 10, \"search\": \"\", \"bootcampContentId\": \"{{bootcampContentId}}\" }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createForum",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateForum($input: InputForum!) {\n  createForum(input: $input) { id text }\n}",
+                "variables": "{\n  \"input\": {\n    \"title\": \"Pertanyaan tentang SQL Join\",\n    \"type\": \"QUESTION\",\n    \"text\": \"<p>Bagaimana cara...</p>\",\n    \"bootcampContentId\": \"{{bootcampContentId}}\",\n    \"parentId\": null\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "upForumVotes",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Vote($forumId: String!, $value: Float!) {\n  upForumVotes(forumId: $forumId, value: $value) { id }\n}",
+                "variables": "{\n  \"forumId\": \"{{forumId}}\",\n  \"value\": 1\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Media",
+      "item": [
+        {
+          "name": "availableStorage",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": { "query": "query Storage { availableStorage { usedStorage maxStorage } }", "variables": "{}" }
+            }
+          }
+        },
+        {
+          "name": "medias (list)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Medias($type: String, $param: InputBaseQuery) {\n  medias(type: $type, param: $param) { id title type mimeType size url status }\n  countMedias(type: $type)\n}",
+                "variables": "{\n  \"type\": \"video\",\n  \"param\": { \"page\": 1, \"limit\": 10, \"search\": \"\" }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "createRawMedia",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.data && r.data.createRawMedia) pm.collectionVariables.set('mediaId', r.data.createRawMedia.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateRawMedia($title: String!, $fileName: String!, $fileSize: Float!, $mimeType: String!) {\n  createRawMedia(title: $title, fileName: $fileName, fileSize: $fileSize, mimeType: $mimeType) { id title status }\n}",
+                "variables": "{\n  \"title\": \"Materi Sesi 1\",\n  \"fileName\": \"materi.pdf\",\n  \"fileSize\": 102400,\n  \"mimeType\": \"application/pdf\"\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "11. Mentor / Grading",
+      "item": [
+        {
+          "name": "mentorBootcamp (+count)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query MentorBootcamp($query: InputBaseQuery!) {\n  mentorBootcamp(query: $query) { id title startedAt finishedAt }\n  countMentorBootcamp(query: $query)\n}",
+                "variables": "{\n  \"query\": { \"page\": 1, \"limit\": 10, \"search\": \"\" }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "assignedMentor & unassignedMentor",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Mentors($bootcampId: String!, $query: UserBaseQuery) {\n  assignedMentor(bootcampId: $bootcampId, query: $query) { id name email }\n  countAssignedMentor(bootcampId: $bootcampId, query: $query)\n  unassignedMentor(bootcampId: $bootcampId, query: $query) { id name email }\n  countUnassignedMentor(bootcampId: $bootcampId, query: $query)\n}",
+                "variables": "{\n  \"bootcampId\": \"{{bootcampId}}\",\n  \"query\": { \"page\": 1, \"limit\": 10, \"search\": \"\" }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "assignMentor",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation AssignMentor($bootcampId: String!, $userIds: [String!]!) {\n  assignMentor(bootcampId: $bootcampId, userIds: $userIds) { id }\n}",
+                "variables": "{\n  \"bootcampId\": \"{{bootcampId}}\",\n  \"userIds\": [\"{{employeeId}}\"]\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "unassignMentor",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UnassignMentor($bootcampId: String!, $userIds: [String!]!) {\n  unassignMentor(bootcampId: $bootcampId, userIds: $userIds) { id }\n}",
+                "variables": "{\n  \"bootcampId\": \"{{bootcampId}}\",\n  \"userIds\": [\"{{employeeId}}\"]\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "mentorBootcampQuiz / mentorBootcampSubmission",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query MentorTasks($q: BootcampQuizBaseQuery!, $s: BootcampSubmissionBaseQuery!) {\n  mentorBootcampQuiz(query: $q) { id title type }\n  mentorBootcampSubmission(query: $s) { id title type }\n}",
+                "variables": "{\n  \"q\": { \"page\": 1, \"limit\": 10, \"search\": \"\", \"bootcampId\": \"{{bootcampId}}\" },\n  \"s\": { \"page\": 1, \"limit\": 10, \"search\": \"\", \"bootcampId\": \"{{bootcampId}}\" }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "essayGrading (nilai esai quiz)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation EssayGrading($id: String!, $input: BootcampEssayGradingInput!) {\n  essayGrading(id: $id, input: $input) { id score }\n}",
+                "variables": "{\n  \"id\": \"<quizLogId>\",\n  \"input\": {\n    \"essayAnswer\": [ { \"questionId\": \"<uuid-eq>\", \"score\": 80, \"comment\": \"Bagus\" } ],\n    \"bonusScore\": 5,\n    \"bonusReason\": \"Inisiatif\"\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "gradeUserSubmission (nilai project)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation GradeSubmission($id: String!, $input: UserSubmissionUpdate!) {\n  gradeUserSubmission(id: $id, input: $input) { id }\n}",
+                "variables": "{\n  \"id\": \"<submissionLogId>\",\n  \"input\": {\n    \"submissionId\": \"{{submissionId}}\",\n    \"totalScore\": 90,\n    \"comment\": \"Lengkap\",\n    \"gradingCriteriaScore\": [ { \"assessmentAspect\": \"Kelengkapan\", \"gradingScore\": [100] } ]\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "finish grading toggles",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation FinishGrading($quizId: String!, $submissionId: String!) {\n  quizFinishGradingToggle(id: $quizId) { id isFinishGrading }\n  submissionFinishGradingToggle(id: $submissionId) { id isGradingFinish }\n}",
+                "variables": "{\n  \"quizId\": \"{{quizId}}\",\n  \"submissionId\": \"{{submissionId}}\"\n}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "12. Activity Log",
+      "item": [
+        {
+          "name": "userActivityLogByCompanyId (+count)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query LogByCompany($input: InputBaseQuery!, $events: [String!], $entities: [String!], $employeeIds: [String!]) {\n  userActivityLogByCompanyId(input: $input, events: $events, entities: $entities, employeeIds: $employeeIds) {\n    id\n  }\n  countUserActivityLogByCompanyId(input: $input, events: $events, entities: $entities, employeeIds: $employeeIds)\n}",
+                "variables": "{\n  \"input\": { \"page\": 1, \"limit\": 10, \"search\": \"\" },\n  \"events\": null,\n  \"entities\": null,\n  \"employeeIds\": null\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "userActivityLog (super admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Log($input: InputBaseQuery!, $companyIds: [String!], $roles: [String!]) {\n  userActivityLog(input: $input, companyIds: $companyIds, roles: $roles) { id }\n  countUserActivityLog(input: $input, companyIds: $companyIds, roles: $roles)\n}",
+                "variables": "{\n  \"input\": { \"page\": 1, \"limit\": 10, \"search\": \"\" },\n  \"companyIds\": [\"{{companyId}}\"],\n  \"roles\": null\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "exportUserActivityLog",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseURL}}", "host": ["{{baseURL}}"] },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation ExportLog($events: [String!], $entities: [String!], $employeeIds: [String!]) {\n  exportUserActivityLog(events: $events, entities: $entities, employeeIds: $employeeIds)\n}",
+                "variables": "{\n  \"events\": null,\n  \"entities\": null,\n  \"employeeIds\": null\n}"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

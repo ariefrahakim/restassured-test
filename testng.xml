@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="LMS B2B GraphQL Suite" verbose="1">
+    <test name="LMS B2B GraphQL Scenarios">
+        <classes>
+            <class name="id.dibimbing.lms.tests.AuthTest"/>
+            <class name="id.dibimbing.lms.tests.CompanyAdminTest"/>
+            <class name="id.dibimbing.lms.tests.ProgramTest"/>
+            <class name="id.dibimbing.lms.tests.LearnerTest"/>
+            <class name="id.dibimbing.lms.tests.VideoCourseAnnouncementMediaTest"/>
+            <class name="id.dibimbing.lms.tests.BootcampTest"/>
+            <class name="id.dibimbing.lms.tests.MentorGradingActivityLogTest"/>
+        </classes>
+    </test>
+</suite>

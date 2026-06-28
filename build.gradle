@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+}
+
+group = 'id.dibimbing.lms'
+version = '1.0.0'
+description = 'RestAssured test suite untuk skenario pada koleksi Postman GraphQL LMS B2B'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    restAssuredVersion = '5.4.0'
+    testngVersion = '7.10.2'
+    jacksonVersion = '2.17.1'
+}
+
+dependencies {
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation "io.rest-assured:json-path:${restAssuredVersion}"
+    testImplementation "io.rest-assured:json-schema-validator:${restAssuredVersion}"
+    testImplementation "org.testng:testng:${testngVersion}"
+    testImplementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    testImplementation "org.hamcrest:hamcrest:2.2"
+}
+
+test {
+    useTestNG() {
+        suites 'testng.xml'
+    }
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showStandardStreams = true
+    }
+    // teruskan -DKEY=value (mis. -DCOMPANY_ID=...) ke proses test
+    systemProperties System.properties
+    // jalankan dari root project agar .env terbaca
+    workingDir = projectDir
+}
