@@ -44,11 +44,13 @@ curl -s -u "$B" -b ck.txt -H "Content-Type: application/json" $EP -d '{"query":"
 3. Jalankan **`1. Auth > login`** → cookie tersimpan otomatis.
 4. Jalankan request lain (13 folder: Health, Auth, Companies, Employees, Program, Learner, Video Course, Bootcamp, Announcement, Forum, Media, Mentor/Grading, Activity Log).
 
-## 5. Pakai test otomatis (RestAssured + TestNG)
+## 5. Pakai test otomatis (RestAssured + TestNG, build Gradle)
 ```bash
 cd restassured-tests
-mvn test            # baca restassured-tests/.env otomatis
+./gradlew test                       # seluruh suite, baca .env otomatis
+./gradlew test --tests '*AuthTest'   # satu class
 ```
+> Salin `.env.example` → `.env` lalu isi kredensial. Laporan: `build/reports/tests/test/index.html`.
 
 ## 6. ⚠️ 5 jebakan yang sering bikin error
 1. **Lupa `companyId` yang benar** → `wrong username or password`. companyId harus milik perusahaan user.
